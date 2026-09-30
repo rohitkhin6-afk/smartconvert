@@ -1,32 +1,20 @@
-"""Application entry point for SmartConvert."""
+"""SmartConvert application entry point."""
 
 import sys
 
-from PySide6.QtCore import Qt
-from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
+from PySide6.QtGui import QFont
+from PySide6.QtWidgets import QApplication
 
-WINDOW_WIDTH = 1000
-WINDOW_HEIGHT = 650
-
-
-def create_main_window() -> QMainWindow:
-    """Create and configure the main SmartConvert window."""
-    window = QMainWindow()
-    window.setWindowTitle("SmartConvert")
-    window.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
-
-    welcome_label = QLabel("Welcome to SmartConvert")
-    welcome_label.setStyleSheet("font-size: 24px;")
-    welcome_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-    window.setCentralWidget(welcome_label)
-
-    return window
+from app.ui.main_window import MainWindow
 
 
 def main() -> int:
-    """Run the SmartConvert desktop application."""
+    """Launch the SmartConvert desktop application."""
     application = QApplication(sys.argv)
-    window = create_main_window()
+    application.setApplicationName("SmartConvert")
+    application.setFont(QFont("Inter", 10))
+
+    window = MainWindow()
     window.show()
     return application.exec()
 
