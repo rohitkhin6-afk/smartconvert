@@ -92,4 +92,10 @@ QProgressBar {
 QProgressBar::chunk { background: #765fff; border-radius: 4px; }
 QLabel#EmptyIcon { color: #4d5468; font-size: 23px; }
 QLabel#EmptyText { color: #747c90; font-size: 11px; }
+QLabel#OutputPath { color: #8d94a8; font-size: 10px; }
+QPushButton#ActionButton {
+    background: #24213c; color: #c5baff; border: 1px solid #4b426f;
+    border-radius: 7px; padding: 6px 10px; font-size: 11px; font-weight: 700;
+}
+QPushButton#ActionButton:hover { background: #302a50; border-color: #755cff; }
 """
