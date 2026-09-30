@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QDragEnterEvent, QDropEvent
 from PySide6.QtWidgets import QFileDialog, QFrame, QHBoxLayout, QLabel, QPushButton, QVBoxLayout
 
@@ -11,12 +11,14 @@ class UploadWidget(QFrame):
     """File browser and drop target with inline validation feedback."""
 
     SUPPORTED_EXTENSIONS = {".pdf", ".docx", ".xlsx", ".jpg", ".jpeg", ".png"}
+    file_selected = Signal(str)
 
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setObjectName("UploadCard")
         self.setAcceptDrops(True)
         self.setMinimumHeight(285)
+        self.selected_file: Path | None = None
 
         layout = QVBoxLayout(self)
         layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -71,10 +73,12 @@ class UploadWidget(QFrame):
 
     def _select_file(self, path: Path) -> None:
         if path.suffix.lower() not in self.SUPPORTED_EXTENSIONS:
+            self.selected_file = None
             self.error.setText(f"{path.suffix.upper() or 'This file type'} is not supported. Choose a listed format.")
             self.error.show()
             return
         self.error.hide()
+        self.selected_file = path
         self.icon.setText("✓")
         self.title.setText(path.name)
         self.title.setObjectName("FileName")
@@ -84,6 +88,7 @@ class UploadWidget(QFrame):
         self.file_meta.setText(f"{self._format_size(size)}   •   {path.suffix[1:].upper()} file")
         self.file_meta.show()
         self.detail.setText("Ready to convert")
+        self.file_selected.emit(str(path))
 
     @staticmethod
     def _format_size(byte_count: int) -> str:

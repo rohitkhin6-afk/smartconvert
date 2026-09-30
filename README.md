@@ -3,8 +3,9 @@
 SmartConvert is a Python desktop application for converting files through a
 clean, approachable interface built with PySide6.
 
-> The project currently contains the initial application shell. File conversion
-> functionality will be added in a future release.
+The first supported conversion is **PDF to Word**. Select or drop a PDF, choose
+the PDF to Word card, and select an output folder. Conversion runs in the
+background and creates a DOCX with the same base filename.
 
 ## Getting started
 

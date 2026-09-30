@@ -1,17 +1,21 @@
 """Reusable conversion shortcut card."""
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
+from PySide6.QtGui import QMouseEvent
 from PySide6.QtWidgets import QFrame, QHBoxLayout, QLabel, QVBoxLayout
 
 
 class ConverterCard(QFrame):
     """A styled, reusable conversion option."""
 
+    selected = Signal(str)
+
     def __init__(self, icon: str, title: str, description: str, parent=None) -> None:
         super().__init__(parent)
         self.setObjectName("ConverterCard")
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setMinimumHeight(105)
+        self.title = title
 
         layout = QHBoxLayout(self)
         layout.setContentsMargins(17, 16, 15, 16)
@@ -34,3 +38,11 @@ class ConverterCard(QFrame):
         layout.addWidget(icon_label)
         layout.addLayout(copy, 1)
         layout.addWidget(arrow)
+
+    def mouseReleaseEvent(self, event: QMouseEvent) -> None:  # noqa: N802
+        if (
+            event.button() == Qt.MouseButton.LeftButton
+            and self.rect().contains(event.position().toPoint())
+        ):
+            self.selected.emit(self.title)
+        super().mouseReleaseEvent(event)
