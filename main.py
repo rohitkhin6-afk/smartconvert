@@ -5,12 +5,15 @@ import sys
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import QApplication, QLabel, QMainWindow
 
+WINDOW_WIDTH = 1000
+WINDOW_HEIGHT = 650
+
 
 def create_main_window() -> QMainWindow:
     """Create and configure the main SmartConvert window."""
     window = QMainWindow()
     window.setWindowTitle("SmartConvert")
-    window.resize(800, 500)
+    window.resize(WINDOW_WIDTH, WINDOW_HEIGHT)
 
     welcome_label = QLabel("Welcome to SmartConvert")
     welcome_label.setStyleSheet("font-size: 24px;")
